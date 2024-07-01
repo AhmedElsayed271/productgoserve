@@ -57,37 +57,37 @@
         </div>
     </section>
 
-    
+
 
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="card card-warning">
                 <div class="card-header">
-                  <h3 class="card-title">احصائيات</h3>
+                    <h3 class="card-title">احصائيات</h3>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <form>
-                    <div class="row">
-          
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>عدد المنتجات</label>
-                          <input  id="countofproduct" type="text" class="form-control" placeholder="" disabled>
-                        </div>
-                      </div>
-                    </div>
-         
-  
+                    <form>
+                        <div class="row">
 
-  
-     
-  
-                  </form>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>عدد المنتجات</label>
+                                    <input id="countofproduct" type="text" class="form-control" placeholder="" disabled>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                    </form>
                 </div>
                 <!-- /.card-body -->
-              </div>
+            </div>
             <div class="card">
                 <div class="card-header">
                     @if (auth('user')->user()->has_permission('create-products'))
@@ -103,6 +103,13 @@
                         <a href="#" type="button"
                             class="btn btn-info disabled">{{ trans('admin.import_product') }}</a>
                     @endif
+                    @if (auth('user')->user()->has_permission('delete-products'))
+                        <a href="#" type="button" id="deleteAll"
+                            class="btn btn-danger">{{ trans('admin.Delete') }}</a>
+                    @else
+                        <a href="#" type="button"
+                            class="btn btn-danger disabled">{{ trans('admin.delete_all') }}</a>
+                    @endif
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -110,6 +117,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th><input type="checkbox" id="selectAllProduct" /></th>
+
                                 <th>{{ trans('admin.Name') }}</th>
                                 <th>{{ trans('admin.sizes') }}</th>
                                 <th>{{ trans('admin.Created at') }}</th>
@@ -117,42 +126,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($products as $product)
-                      <tr>
-                          <td>{{$loop->iteration}}</td>
-
-                          <td><img style="width: 100px;" src="{{ asset('uploads/images/' . $product->photo) }}" alt=""></td>
-                          <td>{{$product->name}}</td>
-                          <td>{{$product->description}}</td>
-                          <td>
-                              @foreach ($product->sizes as $size)
-                                {{ $size->name  }} @if ($loop->index != count($product->sizes) - 1) , @endif 
-                              @endforeach
-                          </td>
-                          <td>{{$product->created_at}}</td>
-                          <td>
-                              <div class="btn-group">
-                                <button type="button" class="btn btn-success">{{ trans('admin.Actions') }}</button>
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                </button>
-                                <div class="dropdown-menu" role="menu">
-                                  @if (auth('user')->user()->has_permission('update-products'))
-                                    <a class="dropdown-item" href="{{route('dashboard.products.edit',$product->id)}}">{{ trans('admin.Edit') }}</a>
-                                  @endif
-
-                                  @if (auth('user')->user()->has_permission('delete-products'))
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-default-{{$product->id}}">{{ trans('admin.Delete') }}</a>
-                                  @endif
-                                </div>
-                              </div>
-
-                              @include('Dashboard.partials.delete_confirmation', [
-                                'url' => route('dashboard.products.destroy',$product->id),
-                                'modal_id'  => 'modal-default-' . $product->id,
-                              ])
-                          </td>
-                      </tr>
-                  @endforeach --}}
+                            
                         </tbody>
                     </table>
                 </div>
@@ -168,15 +142,22 @@
     <script>
         var table = $("#table").DataTable({
             processing: true,
-            serverSide: false,
+            serverSide: true,
             ajax: {
                 "url": "{{ route('dashboard.products.index') }}",
                 "data": function(d) {
-                    d.search = $('#sizes').val();
+                    d.size = $('#sizes').val();
                 }
             },
-            columns: [{
+            columns: [
+
+                {
                     data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'checkboxDelete',
                     orderable: false,
                     searchable: false
                 },
@@ -190,6 +171,8 @@
                 },
                 {
                     data: 'created_at',
+                    orderable: false,
+                    searchable: false
 
                 },
 
@@ -203,7 +186,7 @@
 
 
         });
-        
+
         $('#sizes').change(function() {
 
 
@@ -212,8 +195,8 @@
             table.ajax.reload();
             console.log(table.ajax.json().count);
 
-   
-         
+
+
         });
 
         table.on('draw.dt', function() {
@@ -221,7 +204,60 @@
             console.log(table.ajax.json().count);
 
         });
+    </script>
 
+    <script>
+        $(document).ready(function() {
+
+            $('#selectAllProduct').click(function() {
+                inputs = $(".checkboxDelete");
+                inputs.prop('checked', $(this).prop('checked'));
+
+            })
+
+            $('#deleteAll').click(function(e) {
+
+                e.preventDefault();
+
+                inputs = $(".checkboxDelete:checked:enabled");
+
+                var ids = [];
+
+                inputs.each(function() {
+                    ids.push($(this).val());
+                });
+
+                if (ids.length > 0) {
+                    $.ajax({
+
+                        url: '{{ route('dashboard.products.destroy.all') }}',
+                        type: 'POST',
+                        data: {
+                            'ids': ids,
+                            '_token': '{{ csrf_token() }}'
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            //    $.each(ids, function (index,value) {
+
+                            //         $('#row-' + value).remove();
+
+                            //    })
+
+
+                            location.reload();
+
+                        },
+                        error: function(request, error) {
+                            console.log('Data: ' + request);
+                        }
+                    });
+                }
+
+
+            })
+
+        });
     </script>
 
 @endsection

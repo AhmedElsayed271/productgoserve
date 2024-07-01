@@ -39,7 +39,7 @@ class ProductController extends Controller
 
             $products = Product::with(['sizes']);
 
-            if (request('search')) {
+            if (request('size')) {
                 $products->whereRelation('sizes', 'name', request('search'));
             }
 
@@ -55,17 +55,21 @@ class ProductController extends Controller
                         $sizeProduct .= $size->name . ",";
                     }
                     return $sizeProduct;
-                })->with('count', function () use ($products) {
+                })
+                ->with('count', function () use ($products) {
                     return $products->count();
                 })
 
                 ->addColumn('actions', 'Dashboard.products.actions')
 
+                ->addColumn('checkboxDelete', 'Dashboard.products.checkboxDelete')
+                ->setRowId('row-{{$id}}')
+
                 ->editColumn('created_at', function ($product) {
 
                     return $product->created_at->format('Y-m-d H:i:s');
                 })
-                ->rawColumns(['actions'])
+                ->rawColumns(['actions','checkboxDelete'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -73,40 +77,6 @@ class ProductController extends Controller
         return view('dashboard.products.index', compact('sizes'));
     }
 
-
-    public function getProducts()
-    {
-        $products = Product::with(['sizes']);
-
-
-        if (request('search')) {
-            $products->whereRelation('sizes', 'name', request('search'));
-        }
-
-
-        return Datatables($products)
-
-            ->addColumn('size', function ($product) {
-
-                $sizeProduct = '';
-
-                foreach ($product->sizes as $size) {
-
-                    $sizeProduct .= $size->name . ",";
-                }
-                return $sizeProduct;
-            })
-
-            ->addColumn('actions', 'Dashboard.products.actions')
-
-            ->editColumn('created_at', function ($product) {
-
-                return $product->created_at->format('Y-m-d H:i:s');
-            })
-            ->rawColumns(['actions'])
-            ->addIndexColumn()
-            ->make(true);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -216,6 +186,22 @@ class ProductController extends Controller
 
 
         return redirect()->route('dashboard.products.index')->with('success', 'تم حذف المنتج بنجاح');
+    }
+
+    public function destroyAll(Request $request) 
+    {
+
+        $ids = $request->ids;
+
+        $products = Product::whereIn('id',$ids);
+
+        $products->delete();
+
+        return response()->json([
+            'status' => 204,
+            'data' =>  $products,
+        ]);
+
     }
 
     public function importProductPage()

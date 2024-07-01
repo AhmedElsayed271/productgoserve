@@ -73,12 +73,12 @@ Route::group(
 
                 Route::group(['prefix' => 'products', 'as'=>'products.'],function(){
                     Route::get('/', [ProductController::class, 'index'])->name('index');
-                    Route::get('/get-product', [ProductController::class, 'getProducts'])->name('get-products');
                     Route::get('/create', [ProductController::class, 'create'])->name('create');
                     Route::post('/create', [ProductController::class, 'store'])->name('store');
                     Route::get('{id}/edit', [ProductController::class, 'edit'])->name('edit');
                     Route::post('{id}/edit', [ProductController::class, 'update'])->name('update');
                     Route::get('/destroy/{destory}', [ProductController::class, 'destroy'])->name('destroy');
+                    Route::post('/destroy-all', [ProductController::class, 'destroyAll'])->name('destroy.all');
                     Route::get('/import-products', [ProductController::class, 'importProductPage'])->name('import.products.page');
                     Route::post('/import-products', [ProductController::class, 'importProduct'])->name('import.products');
                 });
