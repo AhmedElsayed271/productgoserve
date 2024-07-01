@@ -40,7 +40,7 @@ class ProductController extends Controller
             $products = Product::with(['sizes']);
 
             if (request('size')) {
-                $products->whereRelation('sizes', 'name', request('search'));
+                $products->whereRelation('sizes', 'name', request('size'));
             }
 
 
