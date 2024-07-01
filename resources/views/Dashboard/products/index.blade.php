@@ -126,7 +126,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                         </tbody>
                     </table>
                 </div>
@@ -190,18 +190,17 @@
         $('#sizes').change(function() {
 
 
-            $('#countofproduct').val(table.ajax.json().count);
-            console.log(table.ajax.json().count);
+            $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
+
             table.ajax.reload();
-            console.log(table.ajax.json().count);
 
 
 
         });
 
         table.on('draw.dt', function() {
-            $('#countofproduct').val(table.ajax.json().count);
-            console.log(table.ajax.json().count);
+            $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
+            console.log('test');
 
         });
     </script>

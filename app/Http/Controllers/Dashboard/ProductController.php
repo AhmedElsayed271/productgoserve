@@ -56,9 +56,9 @@ class ProductController extends Controller
                     }
                     return $sizeProduct;
                 })
-                ->with('count', function () use ($products) {
-                    return $products->count();
-                })
+                // ->with('count', function () use ($products) {
+                //     return $products->count();
+                // })
 
                 ->addColumn('actions', 'Dashboard.products.actions')
 
