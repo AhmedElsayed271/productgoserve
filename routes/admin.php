@@ -3,15 +3,15 @@
 use App\Models\Setting;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\HomeController;
-use App\Http\Controllers\Dashboard\RoleController;
-use App\Http\Controllers\Dashboard\SizeController;
-use App\Http\Controllers\Dashboard\UserController;
-use App\Http\Controllers\Dashboard\ProductController;
-use App\Http\Controllers\Dashboard\ProfileController;
-use App\Http\Controllers\Dashboard\SettingController;
-use App\Http\Controllers\Dashboard\CategoryController;
-use App\Http\Controllers\Dashboard\AuthenticationController;
+use App\Http\Controllers\dashboard\HomeController;
+use App\Http\Controllers\dashboard\RoleController;
+use App\Http\Controllers\dashboard\SizeController;
+use App\Http\Controllers\dashboard\UserController;
+use App\Http\Controllers\dashboard\ProductController;
+use App\Http\Controllers\dashboard\ProfileController;
+use App\Http\Controllers\dashboard\SettingController;
+use App\Http\Controllers\dashboard\CategoryController;
+use App\Http\Controllers\dashboard\AuthenticationController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 

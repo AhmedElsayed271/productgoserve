@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Models\Size;
 use App\Http\Controllers\Controller;
@@ -80,7 +80,7 @@ class SizeController extends Controller
     {
         $size = Size::findOrFail($id);
         
-        return view('Dashboard.sizes.edit', compact('size'));
+        return view('dashboard.sizes.edit', compact('size'));
     }
 
     /**

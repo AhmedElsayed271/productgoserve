@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\profile\edit;
@@ -22,7 +22,7 @@ class ProfileController extends Controller
     }
 
     public function edit(){
-        return view('Dashboard.profile.show')->with([
+        return view('dashboard.profile.show')->with([
             'data' => auth('user')->user(),
         ]);
     }

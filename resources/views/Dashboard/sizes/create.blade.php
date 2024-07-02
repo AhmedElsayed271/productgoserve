@@ -34,7 +34,7 @@
                 <!-- form start -->
                 <form method="post" action="{{ route('dashboard.sizes.store') }}">
                     @csrf
-                    @include('Dashboard.sizes.form')
+                    @include('dashboard.sizes.form')
                     <!-- /.card-body -->
 
                     <div class="card-footer">

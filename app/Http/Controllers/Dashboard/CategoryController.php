@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index(){
         $categories = Category::tree()->get();
-        return view('Dashboard.categories.index')->with([
+        return view('dashboard.categories.index')->with([
             'categories'    => $categories,
         ]);
     }
@@ -20,7 +20,7 @@ class CategoryController extends Controller
     public function create(){
         $categories = Category::tree(0)->get();
 
-        return view('Dashboard.categories.create')->with([
+        return view('dashboard.categories.create')->with([
             'categories'    => $categories,
         ]);
     }
@@ -42,7 +42,7 @@ class CategoryController extends Controller
         $data = Category::findOrFail($id);
         $categories = Category::tree(0)->where('id', '!=',$id)->get();
 
-        return view('Dashboard.categories.edit')->with([
+        return view('dashboard.categories.edit')->with([
             'categories'    => $categories,
             'data'  => $data,
         ]);

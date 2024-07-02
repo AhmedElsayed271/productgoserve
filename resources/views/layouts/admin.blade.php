@@ -1,21 +1,21 @@
 @yield('style')
 
-@include('Dashboard.includes.header')
+@include('dashboard.includes.header')
 
 
-@include('Dashboard.includes.navbar')
+@include('dashboard.includes.navbar')
 
-@include('Dashboard.includes.aside')
+@include('dashboard.includes.aside')
 
 <div class="content-wrapper">
     @yield('content')
 </div>
 
-@include('Dashboard.includes.footer')
+@include('dashboard.includes.footer')
 
 @yield('script')
 
-@include('Dashboard.includes.ajax')
+@include('dashboard.includes.ajax')
 
-@include('Dashboard.partials._session')
-@include('Dashboard.partials.popup')
+@include('dashboard.partials._session')
+@include('dashboard.partials.popup')

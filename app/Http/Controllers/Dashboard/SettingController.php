@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
@@ -11,7 +11,7 @@ class SettingController extends Controller
     public function edit(){
         $setting = Setting::first();
 
-        return view('Dashboard.settings.edit')->with('data', $setting);
+        return view('dashboard.settings.edit')->with('data', $setting);
     }
 
     public function update(Request $request){
