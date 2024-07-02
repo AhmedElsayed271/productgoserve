@@ -106,4 +106,5 @@ return [
     "sizes" => 'المقاسات',
     "size" => 'مقاس',
     "import_product" => 'استيراد المنتجات',
+    "delete_all"      => "حذف الكل"
 ];

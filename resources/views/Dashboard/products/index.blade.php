@@ -51,6 +51,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+
+                            <div class="form-group">
+                                <label for="exampleSelectBorder">اختر اسم المنتج </label>
+                                <input type="text" class="form-control" id="nameProduct" name="name"
+                                    placeholder="ادخل اسم المنتج">
+                            </div>
+
+                            <button type="submit" id="searchProduct" class="btn btn-primary">بحث</button>
+
+                        </div>
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -104,8 +117,15 @@
                             class="btn btn-info disabled">{{ trans('admin.import_product') }}</a>
                     @endif
                     @if (auth('user')->user()->has_permission('delete-products'))
-                        <a href="#" type="button" id="deleteAll"
+                        <a href="#" type="button" id="deletebyid"
                             class="btn btn-danger">{{ trans('admin.Delete') }}</a>
+                    @else
+                        <a href="#" type="button"
+                            class="btn btn-danger disabled">{{ trans('admin.delete') }}</a>
+                    @endif
+                    @if (auth('user')->user()->has_permission('delete-products'))
+                        <a href="{{ route('dashboard.products.destroy.all') }}" type="button"
+                            class="btn btn-danger">{{ trans('admin.delete_all') }}</a>
                     @else
                         <a href="#" type="button"
                             class="btn btn-danger disabled">{{ trans('admin.delete_all') }}</a>
@@ -147,6 +167,7 @@
                 "url": "{{ route('dashboard.products.index') }}",
                 "data": function(d) {
                     d.size = $('#sizes').val();
+                    d.name = $('#nameProduct').val();
                 }
             },
             columns: [
@@ -197,11 +218,21 @@
 
 
         });
+        $('#searchProduct').click(function() {
+
+
+            $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
+
+            table.ajax.reload();
+
+            console.log($('#nameProduct').val())
+
+
+
+        });
 
         table.on('draw.dt', function() {
             $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
-            console.log('test');
-
         });
     </script>
 
@@ -214,7 +245,7 @@
 
             })
 
-            $('#deleteAll').click(function(e) {
+            $('#deletebyid').click(function(e) {
 
                 e.preventDefault();
 
@@ -229,7 +260,7 @@
                 if (ids.length > 0) {
                     $.ajax({
 
-                        url: '{{ route('dashboard.products.destroy.all') }}',
+                        url: "{{ route('dashboard.products.destroy.by.id') }}",
                         type: 'POST',
                         data: {
                             'ids': ids,

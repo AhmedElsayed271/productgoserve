@@ -42,6 +42,9 @@ class ProductController extends Controller
             if (request('size')) {
                 $products->whereRelation('sizes', 'name', request('size'));
             }
+            if (request('name')) {
+                $products->where('name', request('name'));
+            }
 
 
             return Datatables($products)
@@ -188,7 +191,7 @@ class ProductController extends Controller
         return redirect()->route('dashboard.products.index')->with('success', 'تم حذف المنتج بنجاح');
     }
 
-    public function destroyAll(Request $request) 
+    public function destroyById(Request $request) 
     {
 
         $ids = $request->ids;
@@ -202,6 +205,14 @@ class ProductController extends Controller
             'data' =>  $products,
         ]);
 
+    }
+
+    public function destroyall()
+    {
+      
+        Product::query()->delete();
+
+        return redirect()->route('dashboard.products.index')->with('success', 'تم حذف المنتجات بنجاح');
     }
 
     public function importProductPage()
