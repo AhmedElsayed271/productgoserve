@@ -34,7 +34,7 @@
                 <!-- form start -->
                 <form method="post" action="">
                     @csrf
-                    @include('Dashboard.users.form')
+                    @include('dashboard.users.form')
                     <!-- /.card-body -->
 
                     <div class="card-footer">

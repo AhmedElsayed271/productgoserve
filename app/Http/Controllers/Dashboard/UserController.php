@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\users\createRequest;
@@ -62,7 +62,7 @@ class UserController extends Controller
                         $btn.= '</div></div>';
 
                         //delete alert
-                        $btn .= view("Dashboard.partials.delete_confirmation", [
+                        $btn .= view("dashboard.partials.delete_confirmation", [
                             'url' =>  route('dashboard.users.destroy', $row->id),
                             'modal_id'  => 'modal-default-' . $row->id,
                         ]);
@@ -75,14 +75,14 @@ class UserController extends Controller
                     ->make(true);
         }
 
-        return view('Dashboard.users.index')->with([
+        return view('dashboard.users.index')->with([
             'roles' => $roles,
         ]);
     }
 
     public function create(){
         $roles = Role::all();
-        return view('Dashboard.users.create')->with('roles', $roles);
+        return view('dashboard.users.create')->with('roles', $roles);
     }
 
     public function store(createRequest $request){
@@ -107,7 +107,7 @@ class UserController extends Controller
         if($user->super == 1)
             return redirect(route('dashboard.users.index'))->with('error', trans('admin.you can\'t update this user'));
         
-        return view('Dashboard.users.edit')->with([
+        return view('dashboard.users.edit')->with([
             'roles' => $roles,
             'data' => $user,
         ]);
@@ -153,7 +153,7 @@ class UserController extends Controller
     public function activity_logs($id){
         $user = User::findOrFail($id);
 
-        return view('Dashboard.users.activity_logs')->with([
+        return view('dashboard.users.activity_logs')->with([
             'user' => $user,
         ]);
     }

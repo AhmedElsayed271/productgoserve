@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
@@ -16,6 +16,6 @@ class HomeController extends Controller
 
         $countOfProducts = Product::get()->count();
 
-        return view('Dashboard.home',compact('countOfProducts'));
+        return view('dashboard.home',compact('countOfProducts'));
     }
 }

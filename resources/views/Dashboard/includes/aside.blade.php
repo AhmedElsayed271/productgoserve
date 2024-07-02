@@ -33,7 +33,7 @@
             <a href="{{route('dashboard.home')}}" class="nav-link {{request()->is('*/dashboard')? 'active':''}}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                {{ trans('admin.Dashboard') }}
+                {{ trans('admin.dashboard') }}
               </p>
             </a>
           </li>

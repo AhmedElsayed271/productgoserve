@@ -34,7 +34,7 @@
                 <!-- form start -->
                 <form method="post" action="{{ route('dashboard.products.store') }}" enctype="multipart/form-data">
                     @csrf
-                    @include('Dashboard.products.form')
+                    @include('dashboard.products.form')
                     <!-- /.card-body -->
 
                     <div class="card-footer">

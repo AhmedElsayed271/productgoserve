@@ -19,7 +19,7 @@ return [
     'Roles'             => 'Roles',
     'Users Mangement'   => 'Users Mangement',
     'Home'              => 'Home',
-    'Dashboard'         => 'Dashboard',
+    'dashboard'         => 'dashboard',
     'Admins'            => 'Admins',
     'Name'              => 'Name',
     'Role'              => 'Role',

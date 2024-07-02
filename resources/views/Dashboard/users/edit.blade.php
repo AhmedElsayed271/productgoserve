@@ -34,7 +34,7 @@
                 <!-- form start -->
                 <form method="post" action="">
                     @csrf
-                    @include('Dashboard.users.form')
+                    @include('dashboard.users.form')
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">{{ trans('admin.Save') }}</button>

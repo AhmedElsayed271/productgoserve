@@ -67,7 +67,7 @@
                                 </div>
                               </div>
 
-                              @include('Dashboard.partials.delete_confirmation', [
+                              @include('dashboard.partials.delete_confirmation', [
                                 'url' => route('dashboard.categories.destroy',$category->id),
                                 'modal_id'  => 'modal-default-' . $category->id,
                               ])

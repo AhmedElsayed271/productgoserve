@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\users\login;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthenticationController extends Controller
 {
     public function loginView(){
-        return view('Dashboard.login');
+        return view('dashboard.login');
     }
 
     public function login(login $Request){

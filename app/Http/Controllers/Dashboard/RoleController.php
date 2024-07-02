@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\roles\createRequest;
@@ -29,11 +29,11 @@ class RoleController extends Controller
 
     public function index(){
         $roles = Role::get();
-        return view('Dashboard.roles.index')->with('roles', $roles);
+        return view('dashboard.roles.index')->with('roles', $roles);
     }
 
     public function create(){
-        return view('Dashboard.roles.create');
+        return view('dashboard.roles.create');
     }
 
     public function store(createRequest $request){
@@ -54,7 +54,7 @@ class RoleController extends Controller
     public function edit($role_id){
         $role = Role::findOrFail($role_id);
 
-        return view('Dashboard.roles.edit')->with('data', $role);
+        return view('dashboard.roles.edit')->with('data', $role);
     }
 
     public function update($role_id, editRequest $request){

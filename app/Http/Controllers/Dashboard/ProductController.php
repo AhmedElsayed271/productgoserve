@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\dashboard;
 
 use App\Models\Size;
 use App\Models\Product;
@@ -63,9 +63,9 @@ class ProductController extends Controller
                 //     return $products->count();
                 // })
 
-                ->addColumn('actions', 'Dashboard.products.actions')
+                ->addColumn('actions', 'dashboard.products.actions')
 
-                ->addColumn('checkboxDelete', 'Dashboard.products.checkboxDelete')
+                ->addColumn('checkboxDelete', 'dashboard.products.checkboxDelete')
                 ->setRowId('row-{{$id}}')
 
                 ->editColumn('created_at', function ($product) {
@@ -93,7 +93,7 @@ class ProductController extends Controller
 
 
 
-        return view('Dashboard.products.create', compact('sizes'));
+        return view('dashboard.products.create', compact('sizes'));
     }
 
     /**
@@ -143,7 +143,7 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
-        return view('Dashboard.products.edit', compact('product', 'sizes'));
+        return view('dashboard.products.edit', compact('product', 'sizes'));
     }
 
     /**
@@ -217,7 +217,7 @@ class ProductController extends Controller
 
     public function importProductPage()
     {
-        return view('Dashboard.products.import-product');
+        return view('dashboard.products.import-product');
     }
     public function importProduct(Request $request)
     {
