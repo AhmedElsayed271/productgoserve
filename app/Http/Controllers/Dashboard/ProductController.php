@@ -45,6 +45,9 @@ class ProductController extends Controller
                 $products->whereRelation('sizes', 'name', request('size'));
                 
             }
+
+
+    
             
             if (request('name')) {
                 $products->where('name', "LIKE" , '%' . request('name') . "%");
