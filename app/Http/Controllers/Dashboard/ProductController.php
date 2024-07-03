@@ -41,6 +41,7 @@ class ProductController extends Controller
 
             if (request('size')) {
                 $products->whereRelation('sizes', 'name', request('size'));
+                
             }
             if (request('name')) {
                 $products->where('name', request('name'));
