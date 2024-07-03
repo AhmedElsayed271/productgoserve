@@ -44,7 +44,7 @@ class ProductController extends Controller
                 
             }
             if (request('name')) {
-                $products->where('name', request('name'));
+                $products->where('name', "LIKE" , '%' . request('name') . "%");
             }
 
 
