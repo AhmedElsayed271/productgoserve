@@ -260,8 +260,6 @@
         // });
 
 
-        
-
         table.on('draw.dt', function() {
             $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
         });

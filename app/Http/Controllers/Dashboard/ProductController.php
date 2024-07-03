@@ -216,7 +216,7 @@ class ProductController extends Controller
 
     public function destroyall()
     {
-      
+
         Product::query()->delete();
 
         return redirect()->route('dashboard.products.index')->with('success', 'تم حذف المنتجات بنجاح');
