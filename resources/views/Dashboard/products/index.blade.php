@@ -263,6 +263,9 @@
             $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
         });
 
+
+
+
         
     </script>
 
