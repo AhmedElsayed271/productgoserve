@@ -55,6 +55,21 @@
                         <div class="form-group">
 
                             <div class="form-group">
+                                <label for="exampleSelectBorder">اختر الاسم </label>
+                                <select id="searchName" name="name" class="custom-select form-control-border"
+                                    id="exampleSelectBorder">
+                                    <option value=""></option>
+                                    @foreach ($products as $product)
+                                        <option value="{{ $product->name }}">{{ $product->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- <div class="col-lg-6">
+                        <div class="form-group">
+
+                            <div class="form-group">
                                 <label for="exampleSelectBorder">اختر اسم المنتج </label>
                                 <input type="text" class="form-control" id="nameProduct" name="name"
                                     placeholder="ادخل اسم المنتج">
@@ -63,7 +78,7 @@
                             <button type="submit" id="searchProduct" class="btn btn-primary">بحث</button>
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <!-- /.card-body -->
             </div>
@@ -167,7 +182,7 @@
                 "url": "{{ route('dashboard.products.index') }}",
                 "data": function(d) {
                     d.size = $('#sizes').val();
-                    d.name = $('#nameProduct').val();
+                    d.name = $('#searchName').val();
                 }
             },
             columns: [
@@ -218,18 +233,31 @@
 
 
         });
-        $('#searchProduct').click(function() {
+
+        $('#searchName').change(function() {
 
 
-            $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
+           
 
             table.ajax.reload();
 
-            console.log($('#nameProduct').val())
+            console.log($('#searchName').val());
 
 
 
         });
+        // $('#searchProduct').click(function() {
+
+
+        //     $('#countofproduct').val(table.settings()[0].json.recordsFiltered);
+
+        //     table.ajax.reload();
+
+        //     console.log($('#nameProduct').val())
+
+
+
+        // });
 
         table.on('draw.dt', function() {
             $('#countofproduct').val(table.settings()[0].json.recordsFiltered);

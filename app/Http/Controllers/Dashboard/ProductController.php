@@ -35,6 +35,8 @@ class ProductController extends Controller
 
         $sizes = Size::all();
 
+        $products = Product::get();
+
         if ($request->ajax()) {
 
             $products = Product::with(['sizes']);
@@ -43,6 +45,7 @@ class ProductController extends Controller
                 $products->whereRelation('sizes', 'name', request('size'));
                 
             }
+            
             if (request('name')) {
                 $products->where('name', "LIKE" , '%' . request('name') . "%");
             }
@@ -78,7 +81,7 @@ class ProductController extends Controller
                 ->make(true);
         }
 
-        return view('dashboard.products.index', compact('sizes'));
+        return view('dashboard.products.index', compact('sizes','products'));
     }
 
 
