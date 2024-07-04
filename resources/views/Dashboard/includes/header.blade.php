@@ -62,7 +62,9 @@
       <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   @endif
+      <link rel="stylesheet" href="{{ asset('/theme/dashboard/dist/css/pagination_res.css') }}" />
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
