@@ -22,44 +22,54 @@ class ProductImport implements ToCollection
     public function collection(Collection $rows)
     {
         foreach ($rows as $row) {
-            $sizes = $row[0];
-            $substringsToRemove = ['\'', '"'];
-            $sizes = str_replace($substringsToRemove, "", $sizes);
-            $sizes = explode(",", $sizes);
-            $sizeArr = [];
 
-            foreach ($sizes as $size) {
-                $checkSize = Size::where('name', $size)->first();
-                $id = $checkSize->id ?? "";
 
-                if (!$checkSize) {
-                    $checkSize = Size::create([
-                        'name' => $size,
-                    ]);
-                    $id = $checkSize->id;
+            $strings = explode(',',$row[1]);
+
+            // Regular expression pattern to capture SKU, Arabic sentence, and Qty
+            $pattern = '/\(SKU: (\d+)\)(.*?)\(Qty: (\d+)\)/u'; // 'u' flag for Unicode support
+
+
+            // Arrays to store extracted data
+            $skus = [];
+            $arabic_sentences = [];
+            $quantities = [];
+
+            foreach ($strings as $string) {
+                if (preg_match($pattern, $string, $matches)) {
+                    $sku = $matches[1]; // SKU number
+                    $arabic_sentence = trim($matches[2]); // Arabic sentence
+                    $qty = $matches[3]; // Qty
+
+                    $skus[] = $sku;
+                    $arabic_sentences[] = $arabic_sentence;
+                    $quantities[] = $qty;
                 }
-
-                $sizeArr[] = $id;
             }
 
+            foreach ($arabic_sentences as $index => $item) {
 
-            $productName = $row[1];
-            $arabicSentence = $this->extractArabicSentence($productName);
 
-            $product = Product::create([
-                'name' => $arabicSentence,
-            ]);
-            $product->sizes()->attach($sizeArr);
+                $size = Size::where('name', $skus[$index])->first();
+
+                $id = $size->id ?? ""; 
+
+                if (!$size) {
+                    $sizse = Size::create([
+                        'name' => $skus[$index],
+                    ]);
+
+                    $id = $size->id;
+                }
+
+                $product = Product::create([
+                    'name' => $item,
+                ]);
+
+                $product->sizes()->attach($id);
+            }       
+
         }
     }
 
-    private function extractArabicSentence($string)
-    {
-
-        $pattern = '/[\p{Arabic}]+(?:\s+[\p{Arabic}]+)*/u';
-
-        preg_match($pattern, $string, $matches);
-
-        return $matches[0] ?? null;
-    }
 }

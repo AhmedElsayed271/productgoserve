@@ -62,7 +62,7 @@ class ProductController extends Controller
 
                     foreach ($product->sizes as $size) {
 
-                        $sizeProduct .= $size->name . ",";
+                        $sizeProduct .= $size->name;
                     }
                     return $sizeProduct;
                 })
