@@ -148,7 +148,7 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="table" class="table table-bordered table-striped">
+                    <table id="table" class="table table-bordered  table-striped data-table responsive">
                         <thead>
                             <tr>
                                 <th>#</th>
