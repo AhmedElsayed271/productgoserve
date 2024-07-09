@@ -21,13 +21,13 @@ class ProductImport implements ToCollection
 
     public function collection(Collection $rows)
     {
-        foreach ($rows as $row) {
+        foreach ($rows as $index => $row) {
 
 
             $strings = explode(',',$row[1]);
 
             // Regular expression pattern to capture SKU, Arabic sentence, and Qty
-            $pattern = '/\(SKU: (\d+)\)(.*?)\(Qty: (\d+)\)/u'; // 'u' flag for Unicode support
+            $pattern = '/\(SKU:\s*(.*?)\)(.*?)\(Qty:\s*(\d+)\)/u'; // 'u' flag for Unicode support
 
 
             // Arrays to store extracted data
@@ -55,7 +55,7 @@ class ProductImport implements ToCollection
                 $id = $size->id ?? ""; 
 
                 if (!$size) {
-                    $sizse = Size::create([
+                    $size = Size::create([
                         'name' => $skus[$index],
                     ]);
 
